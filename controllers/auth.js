@@ -4,7 +4,7 @@ const createUser = (req = request, res = response) => {
 
     const { name, password, email, ...body } = req.body
 
-    return res.json({
+    return res.status(201).json({
         ok: true,
         msg: 'registry',
         name, password, email
@@ -15,7 +15,7 @@ const loginUser = (req = request, res = response) => {
 
     const { password, email, ...body } = req.body
 
-    return res.json({
+    return res.status(200).json({
         ok: true,
         msg: 'login',
         password, email
