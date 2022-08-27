@@ -12,10 +12,12 @@ const createUser = async (req = request, res = response) => {
 
         return res.status(201).json({
             ok: true,
-            msg: 'registry',
-
+            uid: user.id,
+            name: user.name
         })
+
     } catch (error) {
+
         console.log(error)
         res.status(500).json({
             ok: false,
