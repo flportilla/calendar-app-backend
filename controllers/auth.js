@@ -32,15 +32,26 @@ const createUser = async (req = request, res = response) => {
     }
 }
 
-const loginUser = (req = request, res = response) => {
+const loginUser = async (req = request, res = response) => {
 
     const { password, email, ...body } = req.body
+    const user = req.user
 
-    return res.status(200).json({
-        ok: true,
-        msg: 'login',
-        password, email
-    })
+    try {
+        res.json({
+            ok: true,
+            uid: user.id,
+            name: user.name
+        })
+
+    } catch (error) {
+
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'please talk to the admin'
+        })
+    }
 }
 
 const renewToken = (req = request, res = response) => {
