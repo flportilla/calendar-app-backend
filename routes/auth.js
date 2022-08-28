@@ -8,7 +8,7 @@ const { check } = require('express-validator')
 
 const { createUser, renewToken, loginUser } = require('../controllers/auth');
 
-const { fieldValidator } = require('../middlewares/field-validator');
+const { fieldValidator, credentialsValidator, jwtValidator } = require('../middlewares');
 
 const { isEmailDuplicated } = require('../helpers/db-validator');
 
@@ -30,10 +30,11 @@ router.post(
     [
         check('email', 'email is missing').isEmail(),
         check('password', 'password must be at least 6 characters long').isLength({ min: 6 }),
-        fieldValidator
+        fieldValidator,
+        credentialsValidator,
     ],
     loginUser)
 
-router.get('/renew', renewToken)
+router.get('/renew', jwtValidator, renewToken)
 
 module.exports = router
