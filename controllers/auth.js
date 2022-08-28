@@ -63,9 +63,17 @@ const loginUser = async (req = request, res = response) => {
     }
 }
 
-const renewToken = (req = request, res = response) => {
+const renewToken = async (req = request, res = response) => {
+
+    const { uid, name } = req
+
+    const token = await tokenGenerator(uid, name)
+
     return res.json({
-        msg: 'renew'
+        ok: true,
+        uid,
+        name,
+        token
     })
 }
 

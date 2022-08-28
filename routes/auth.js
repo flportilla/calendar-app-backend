@@ -8,7 +8,7 @@ const { check } = require('express-validator')
 
 const { createUser, renewToken, loginUser } = require('../controllers/auth');
 
-const { fieldValidator, credentialsValidator } = require('../middlewares');
+const { fieldValidator, credentialsValidator, jwtValidator } = require('../middlewares');
 
 const { isEmailDuplicated } = require('../helpers/db-validator');
 
@@ -35,6 +35,6 @@ router.post(
     ],
     loginUser)
 
-router.get('/renew', renewToken)
+router.get('/renew', jwtValidator, renewToken)
 
 module.exports = router
