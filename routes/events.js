@@ -11,40 +11,28 @@ const { fieldValidator, jwtValidator } = require('../middlewares');
 
 const router = Router();
 
+//If a middleware is used by all requests, it is easier to put it here
+//The position of the middleware indicates that everything below this line will use it
+router.use(jwtValidator)
+
 //Get events
 router.get(
     '/',
-    [
-        jwtValidator,
-        fieldValidator
-    ],
     getEvents)
 
 //Create event
 router.post(
     '/',
-    [
-        jwtValidator,
-        fieldValidator
-    ],
     createEvent)
 
 //Update events
 router.put(
     '/:id',
-    [
-        jwtValidator,
-        fieldValidator
-    ],
     updateEvent)
 
 //Delete events
 router.delete(
     '/:id',
-    [
-        jwtValidator,
-        fieldValidator
-    ],
     deleteEvent)
 
 module.exports = router
