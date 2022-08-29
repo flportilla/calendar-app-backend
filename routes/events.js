@@ -5,7 +5,10 @@
 
 const { Router } = require('express');
 const { check } = require('express-validator');
+
 const { getEvents, createEvent, updateEvent, deleteEvent } = require('../controllers/events');
+
+const { isExistingEvent } = require('../helpers/db-validator');
 const { isDate } = require('../helpers/isDate');
 
 const { fieldValidator, jwtValidator } = require('../middlewares');
@@ -35,11 +38,22 @@ router.post(
 //Update events
 router.put(
     '/:id',
+    [
+        check('title', 'title is missing - check').notEmpty(),
+        check('start', 'start date is missing - check').custom(isDate),
+        check('end', 'end date is missing - check').custom(isDate),
+        check('id',).custom(isExistingEvent),
+        fieldValidator
+    ],
     updateEvent)
 
 //Delete events
 router.delete(
     '/:id',
+    [
+        check('id',).custom(isExistingEvent),
+        fieldValidator
+    ],
     deleteEvent)
 
 module.exports = router
