@@ -22,6 +22,11 @@ app.use(express.json())
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/events', require('./routes/events'))
 
+//Handles all routes
+app.use('*', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html')
+})
+
 //listening requests
 app.listen(process.env.PORT, () => {
     console.log(`server running on port: ${process.env.PORT}`)
